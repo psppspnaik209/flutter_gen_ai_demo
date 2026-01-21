@@ -60,8 +60,13 @@ import UIKit
             return
         }
         
+        print("AppDelegate: Starting inference with prompt length: \(prompt.count)")
+        print("AppDelegate: EventSink is \(eventSink != nil ? "set" : "nil")")
+        
         let paramsDict: [String: NSNumber] = params.mapValues { NSNumber(value: $0) }
         let success = genAIWrapper?.inference(prompt, withParams: paramsDict) ?? false
+        
+        print("AppDelegate: Inference completed with success: \(success)")
         
         if success {
             result("DONE")
@@ -71,8 +76,12 @@ import UIKit
     }
     
     func didGenerateToken(_ token: String) {
+        print("AppDelegate: Received token from GenAI: '\(token)' (length: \(token.count))")
         if let eventSink = eventSink {
+            print("AppDelegate: Sending token to Flutter event sink")
             eventSink(token)
+        } else {
+            print("AppDelegate: WARNING - eventSink is nil!")
         }
     }
     

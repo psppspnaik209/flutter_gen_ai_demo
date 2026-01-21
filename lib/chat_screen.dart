@@ -1,7 +1,12 @@
+import 'dart:async';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_gen_ai_demo/models.dart';
 
-import 'download_screen.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
+
 import 'file_helpers.dart';
 import 'gen_ai.dart';
 import 'settings_screen.dart';
@@ -15,6 +20,7 @@ class ChatScreen extends StatefulWidget {
 
 class _State extends State<ChatScreen> {
   bool _modelDownloaded = false;
+  bool _isLoadingModel = false;
   String _modelLoadStatus = "Loading...";
   bool _inferencing = false;
   String _systemPrompt = "You are an AI assistant. Always respond with brief, "
@@ -22,43 +28,87 @@ class _State extends State<ChatScreen> {
   double? _temperature = 0.7;
   double? _maxLength;
   double? _lengthPenalty = 1.0;
-  final StringBuffer _tokenBuffer = StringBuffer();
+  String _responseText = '';
   final TextEditingController _promptController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
   String _userPrompt = '';
+  StreamSubscription<String>? _tokenSubscription;
 
   @override
   void initState() {
     super.initState();
+    _setupTokenListener();
     WidgetsBinding.instance.addPostFrameCallback((_) => _load());
+  }
+
+  void _setupTokenListener() {
+    _tokenSubscription = GenAI.tokenStream.listen((token) {
+      print('ChatScreen: Received token in listener: "$token"');
+      setState(() {
+        _responseText += token;
+      });
+      // Scroll to bottom
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (_scrollController.hasClients) {
+          _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
+        }
+      });
+    }, onError: (error) {
+      print('ChatScreen: Stream error: $error');
+    });
   }
 
   void _load() async {
     try {
-      _modelDownloaded = await isModelFilesExist();
-      setState(() {});
+      setState(() {
+        _isLoadingModel = true;
+        _modelLoadStatus = "Loading...";
+      });
+      final missingFiles = await getMissingModelFiles();
+      _modelDownloaded = missingFiles.isEmpty;
+      setState(() {
+        if (!_modelDownloaded) {
+          _isLoadingModel = false;
+          _modelLoadStatus = "Model files missing: ${missingFiles.join(', ')}";
+        }
+      });
       if (_modelDownloaded) {
         String path = await getModelPath();
         await GenAI.load(path);
         setState(() {
+          _isLoadingModel = false;
           _modelLoadStatus = "";
         });
       }
     } catch (e) {
       setState(() {
+        _isLoadingModel = false;
         _modelLoadStatus = "Model load failed: ${e.toString()}";
       });
     }
   }
 
+  Future<bool> _requestStoragePermission() async {
+    // iOS doesn't need storage permissions for file_picker - it uses document picker
+    if (Platform.isIOS) {
+      return true;
+    }
+    // Android needs storage permission
+    var status = await Permission.manageExternalStorage.status;
+    if (!status.isGranted) {
+      status = await Permission.manageExternalStorage.request();
+    }
+    return status.isGranted;
+  }
+
   void _inference() async {
     setState(() {
-      _tokenBuffer.clear();
+      _responseText = '';
       _inferencing = true;
     });
-    String finalPrompt = "<system>$_systemPrompt<|end|>"
-        "<|user|>$_userPrompt<|end|>"
-        "<|assistant|>";
+    String finalPrompt = "<|system|>\n$_systemPrompt<|end|>\n"
+        "<|user|>\n$_userPrompt<|end|>\n"
+        "<|assistant|>\n";
 
     Map<String, double> params = {};
     if (_temperature != null) {
@@ -78,6 +128,7 @@ class _State extends State<ChatScreen> {
 
   @override
   void dispose() {
+    _tokenSubscription?.cancel();
     GenAI.unload();
     _scrollController.dispose();
     super.dispose();
@@ -90,12 +141,6 @@ class _State extends State<ChatScreen> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text('Gen AI Demo'),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.download),
-            onPressed: () async {
-              _downloadModel();
-            },
-          ),
           IconButton(
             icon: const Icon(Icons.settings),
             onPressed: () async {
@@ -129,19 +174,23 @@ class _State extends State<ChatScreen> {
     );
   }
 
-  _downloadModel() async {
-    await Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => const DownloadScreen(),
-      ),
-    );
-    setState(() {
-      _modelLoadStatus = "Loading...";
-    });
-    _load();
-  }
-
   _buildBody() {
+    // Show loading indicator while model is loading
+    if (_isLoadingModel) {
+      return Padding(
+        padding: const EdgeInsets.all(28.0),
+        child: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const CircularProgressIndicator(),
+              const SizedBox(height: 8),
+              Text(_modelLoadStatus),
+            ],
+          ),
+        ),
+      );
+    }
     if (!_modelDownloaded) {
       return Padding(
         padding: const EdgeInsets.all(28.0),
@@ -149,14 +198,34 @@ class _State extends State<ChatScreen> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text("Please download model files for ${Models.getModel().name}"),
+              Text("Model files missing for ${Models.getModel().name}"),
               const SizedBox(height: 8),
               ElevatedButton(
                 onPressed: () async {
-                  _downloadModel();
+                  final hasPermission = await _requestStoragePermission();
+                  if (!hasPermission) {
+                    setState(() {
+                      _modelLoadStatus = "Storage permission denied";
+                    });
+                    return;
+                  }
+                  final folder = await FilePicker.platform.getDirectoryPath();
+                  if (folder == null || folder.isEmpty) {
+                    return;
+                  }
+                  try {
+                    await configureModelFolderSelection(folder);
+                    _load();
+                  } catch (e) {
+                    setState(() {
+                      _modelLoadStatus = "Model load failed: $e";
+                    });
+                  }
                 },
-                child: const Text('Download Model'),
+                child: const Text('Select Model Folder'),
               ),
+              const SizedBox(height: 8),
+              Text(_modelLoadStatus),
             ],
           ),
         ),
@@ -188,36 +257,22 @@ class _State extends State<ChatScreen> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(_userPrompt),
+          Text(_userPrompt,
+              style: const TextStyle(fontWeight: FontWeight.bold)),
           const SizedBox(height: 16),
           Expanded(
-            child: StreamBuilder<String>(
-              stream: GenAI.tokenStream,
-              builder: (context, snapshot) {
-                if (snapshot.hasError) {
-                  return Center(child: Text('Error: ${snapshot.error}'));
-                } else if (!snapshot.hasData) {
-                  return Center(
-                    child: Text(_inferencing
-                        ? 'Inferencing...'
-                        : 'Enter your prompt...'),
-                  );
-                } else {
-                  _tokenBuffer.write(snapshot.data!);
-                  WidgetsBinding.instance.addPostFrameCallback((_) {
-                    _scrollController
-                        .jumpTo(_scrollController.position.maxScrollExtent);
-                  });
-                  return SingleChildScrollView(
-                    controller: _scrollController,
-                    padding: const EdgeInsets.only(bottom: 48),
-                    child: Text(
-                      _tokenBuffer.toString(),
-                    ),
-                  );
-                }
-              },
-            ),
+            child: _responseText.isEmpty && !_inferencing
+                ? const Center(child: Text('Enter your prompt...'))
+                : _responseText.isEmpty && _inferencing
+                    ? const Center(child: Text('Inferencing...'))
+                    : SingleChildScrollView(
+                        controller: _scrollController,
+                        padding: const EdgeInsets.only(bottom: 48),
+                        child: Text(
+                          _responseText,
+                          style: const TextStyle(fontSize: 16),
+                        ),
+                      ),
           ),
           Row(
             children: [

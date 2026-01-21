@@ -16,11 +16,9 @@
 		97C146FC1CF9000F007C117D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FA1CF9000F007C117D /* Main.storyboard */; };
 		97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FD1CF9000F007C117D /* Assets.xcassets */; };
 		97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */; };
-		CE07D4172CBBA53B005D49E9 /* libonnxruntime-genai.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE07D4142CBBA53B005D49E9 /* libonnxruntime-genai.dylib */; };
-		CE07D4182CBBA53B005D49E9 /* libonnxruntime.1.19.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE07D4152CBBA53B005D49E9 /* libonnxruntime.1.19.0.dylib */; };
-		CE07D41F2CBBA5F9005D49E9 /* libonnxruntime-genai.dylib in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CE07D4142CBBA53B005D49E9 /* libonnxruntime-genai.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		CE07D4202CBBA5FA005D49E9 /* libonnxruntime.1.19.0.dylib in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CE07D4152CBBA53B005D49E9 /* libonnxruntime.1.19.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		CE07D42D2CBBC4DA005D49E9 /* GenAIWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = CE07D42C2CBBC4DA005D49E9 /* GenAIWrapper.mm */; };
+		AABB00112345678900XCFRAM /* onnxruntime-genai.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = AABB00102345678900XCFRAM /* onnxruntime-genai.xcframework */; };
+		AABB00122345678900XCFRAM /* onnxruntime-genai.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = AABB00102345678900XCFRAM /* onnxruntime-genai.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,8 +38,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				CE07D4202CBBA5FA005D49E9 /* libonnxruntime.1.19.0.dylib in Embed Frameworks */,
-				CE07D41F2CBBA5F9005D49E9 /* libonnxruntime-genai.dylib in Embed Frameworks */,
+				AABB00122345678900XCFRAM /* onnxruntime-genai.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -70,15 +67,11 @@
 		97C147001CF9000F007C117D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		97C147021CF9000F007C117D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9B2E606BCEAF6F30E922D017 /* Pods-Runner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.debug.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.debug.xcconfig"; sourceTree = "<group>"; };
-		CE07D4142CBBA53B005D49E9 /* libonnxruntime-genai.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libonnxruntime-genai.dylib"; sourceTree = "<group>"; };
-		CE07D4152CBBA53B005D49E9 /* libonnxruntime.1.19.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libonnxruntime.1.19.0.dylib; sourceTree = "<group>"; };
-		CE07D4192CBBA548005D49E9 /* onnxruntime_c_api.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = onnxruntime_c_api.h; sourceTree = "<group>"; };
-		CE07D41A2CBBA548005D49E9 /* ort_genai_c.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ort_genai_c.h; sourceTree = "<group>"; };
-		CE07D41B2CBBA548005D49E9 /* ort_genai.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ort_genai.h; sourceTree = "<group>"; };
 		CE07D4292CBBC39D005D49E9 /* GenAIWrapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GenAIWrapper.h; sourceTree = "<group>"; };
 		CE07D42C2CBBC4DA005D49E9 /* GenAIWrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GenAIWrapper.mm; sourceTree = "<group>"; };
 		D4233EC562148A2D9E9FEFD4 /* Pods-RunnerTests.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RunnerTests.profile.xcconfig"; path = "Target Support Files/Pods-RunnerTests/Pods-RunnerTests.profile.xcconfig"; sourceTree = "<group>"; };
 		DFF4224C3D26BD124FE334F4 /* Pods-Runner.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.profile.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.profile.xcconfig"; sourceTree = "<group>"; };
+		AABB00102345678900XCFRAM /* onnxruntime-genai.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = "onnxruntime-genai.xcframework"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,9 +87,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CE07D4182CBBA53B005D49E9 /* libonnxruntime.1.19.0.dylib in Frameworks */,
 				2B2F428FA24E7E1051EE31B2 /* Pods_Runner.framework in Frameworks */,
-				CE07D4172CBBA53B005D49E9 /* libonnxruntime-genai.dylib in Frameworks */,
+				AABB00112345678900XCFRAM /* onnxruntime-genai.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -138,6 +130,7 @@
 		97C146E51CF9000F007C117D = {
 			isa = PBXGroup;
 			children = (
+				AABB00102345678900XCFRAM /* onnxruntime-genai.xcframework */,
 				9740EEB11CF90186004384FC /* Flutter */,
 				97C146F01CF9000F007C117D /* Runner */,
 				97C146EF1CF9000F007C117D /* Products */,
@@ -159,8 +152,6 @@
 		97C146F01CF9000F007C117D /* Runner */ = {
 			isa = PBXGroup;
 			children = (
-				CE07D41D2CBBA548005D49E9 /* Headers */,
-				CE07D4162CBBA53B005D49E9 /* Libs */,
 				97C146FA1CF9000F007C117D /* Main.storyboard */,
 				97C146FD1CF9000F007C117D /* Assets.xcassets */,
 				97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */,
@@ -182,25 +173,6 @@
 				2FAB3D1280868CDE31B14B04 /* Pods_RunnerTests.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		CE07D4162CBBA53B005D49E9 /* Libs */ = {
-			isa = PBXGroup;
-			children = (
-				CE07D4142CBBA53B005D49E9 /* libonnxruntime-genai.dylib */,
-				CE07D4152CBBA53B005D49E9 /* libonnxruntime.1.19.0.dylib */,
-			);
-			path = Libs;
-			sourceTree = "<group>";
-		};
-		CE07D41D2CBBA548005D49E9 /* Headers */ = {
-			isa = PBXGroup;
-			children = (
-				CE07D4192CBBA548005D49E9 /* onnxruntime_c_api.h */,
-				CE07D41A2CBBA548005D49E9 /* ort_genai_c.h */,
-				CE07D41B2CBBA548005D49E9 /* ort_genai.h */,
-			);
-			path = Headers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -475,7 +447,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -512,7 +484,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = iphoneos;
@@ -530,6 +502,10 @@
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
 				DEVELOPMENT_TEAM = 4H3U58YSWR;
 				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/path_provider_foundation/path_provider_foundation.framework/Headers\"",
@@ -539,10 +515,6 @@
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
-				);
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Runner/Libs",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.flutter.flutterGenAiDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -608,7 +580,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -651,7 +623,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -665,7 +637,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -702,7 +674,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = iphoneos;
@@ -722,6 +694,10 @@
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
 				DEVELOPMENT_TEAM = 4H3U58YSWR;
 				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/path_provider_foundation/path_provider_foundation.framework/Headers\"",
@@ -731,10 +707,6 @@
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
-				);
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Runner/Libs",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.flutter.flutterGenAiDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -754,6 +726,10 @@
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
 				DEVELOPMENT_TEAM = 4H3U58YSWR;
 				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/path_provider_foundation/path_provider_foundation.framework/Headers\"",
@@ -763,10 +739,6 @@
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
-				);
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Runner/Libs",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.flutter.flutterGenAiDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
