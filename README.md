@@ -12,6 +12,7 @@ This is a simple example code that demonstrate how use Small Language Models to 
 
 **Links:**
 - [Medium Article](https://medium.com/@harshanck/ai-at-your-fingertips-local-generative-ai-with-flutter-a10bce7d280a)
+- This a fixed fork of https://github.com/harshanck/flutter_gen_ai_demo
 
 ### Running the project
 
