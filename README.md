@@ -11,7 +11,9 @@ https://huggingface.co/microsoft/Phi-3.5-mini-instruct-onnx/tree/main/cpu_and_mo
 This is a simple example code that demonstrate how use Small Language Models to run on mobile device using a Flutter app.
 
 ## Demo
-[![Watch the demo](https://raw.githubusercontent.com/psppspnaik209/flutter_gen_ai_demo/main/Assets/thumbnail.jpg)](https://raw.githubusercontent.com/psppspnaik209/flutter_gen_ai_demo/main/Assets/flutter_gen_ai.webm)
+<video src="Assets\flutter_gen_ai.webm" width="320" height="240" controls></video>
+
+
 
 **Links:**
 - [Medium Article](https://medium.com/@harshanck/ai-at-your-fingertips-local-generative-ai-with-flutter-a10bce7d280a)
